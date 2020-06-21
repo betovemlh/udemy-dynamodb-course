@@ -1,0 +1,359 @@
+{
+	"info": {
+		"_postman_id": "f9bae022-79f0-4e0a-8651-d86f96ad1e67",
+		"name": "Course - Dynamo DB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listar Tabelas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://curso-dynamodb-gustavo.glitch.me/listarTabelas",
+					"protocol": "https",
+					"host": [
+						"curso-dynamodb-gustavo",
+						"glitch",
+						"me"
+					],
+					"path": [
+						"listarTabelas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir Item",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"TableName\": \"products\",\r\n    \"Item\": {      \r\n      \"product_id\":\"11\",\r\n      \"product_name\":\"Vodka\",\r\n      \"category\":\"Bebidas\",\r\n      \"data_criacao\":1590013704\r\n      \r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/inserirItem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"inserirItem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar Item",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"TableName\": \"customers\",\r\n    \"Key\": {      \r\n      \"email\": \"teste123@gmail\",\r\n      \"name\": \"Teste\"          \r\n    },\r\n    \"UpdateExpression\": \"set #s = :y\",\r\n    \"ConditionExpression\":\"Idade > :x\",\r\n    \"ExpressionAttributeNames\":{\r\n      \"#s\":\"salario\"\r\n    },\r\n    \"ExpressionAttributeValues\":{\r\n      \":y\":\"350\",\r\n      \":x\":5\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/atualizarItem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"atualizarItem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Item",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"TableName\": \"customers\",\r\n    \"Key\": {      \r\n      \"email\": \"g@gmail\",\r\n      \"name\": \"Teste\"          \r\n    }    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/excluirItem",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"excluirItem"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter item pela chave",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"TableName\": \"customers\",\r\n    \"Key\": {      \r\n      \"email\": \"outroteste@gmail.com\",\r\n      \"name\": \"Gustavo\"          \r\n    },\r\n    \"AttributesToGet\":[ \"email\",\"documentos\" ],\r\n    \"ConsistentRead\": \"false\",\r\n    \"ReturnConsumedCapacity\":\"TOTAL\"\r\n\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/getItemByKey",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"getItemByKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter itens pelo método Scan SEM INDICE",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"TableName\": \"products\",\r\n    \"FilterExpression\":\"data_criacao < :p_data_criacao AND category= :p_category\",\r\n    \"ExpressionAttributeValues\":{\r\n      \":p_data_criacao\":1592692104,\r\n      \":p_category\":\"Bebidas\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/scan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"scan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter itens pelo método Scan SEM INDICE COM LIMITACAO e PAGINACAO",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"TableName\": \"products\",\r\n    \"Limit\":3,\r\n    \"ExclusiveStartKey\":\r\n    {    \r\n        \"product_id\": \"9\",\r\n        \"product_name\": \"Cerveja\"\r\n    }    \r\n  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/scan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"scan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter itens pelo método Scan COM INDICE",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"TableName\": \"products\",\r\n    \"IndexName\":\"category-data_criacao-index\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/scan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"scan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter itens pelo método Query",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"TableName\": \"products\",\r\n    \"KeyConditionExpression\":\"product_id = :p_productid\",\r\n    \"FilterExpression\":\"data_criacao < :p_data_criacao\",\r\n    \"ExpressionAttributeValues\":{\r\n      \":p_productid\":\"10\",\r\n      \":p_data_criacao\":1592692104\r\n    }\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter itens pelo método Query com Indice",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"TableName\": \"products\",\r\n    \"Index-Name\":\"category-data_criacao-index\",\r\n    \"KeyConditionExpression\":\"product_id=:p_product_id AND category=:p_category\",\r\n    \"ExpressionAttributeValues\":{\r\n      \":p_product_id\":\"1\",\r\n      \":p_category\":\"Limpeza\"\r\n    }\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"query"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter itens em LOTE pelo método BatchGet",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n    \"RequestItems\":{\r\n      \"customers\":{\r\n        \"Keys\":[\r\n          {\r\n            \"name\":\"Gustavo\",\r\n            \"email\":\"gluis.holz@gmail.com\"\r\n          }\r\n        ]\r\n      },\r\n      \"customers_store\":{\r\n        \"Keys\":[\r\n          {\r\n            \"name\":\"Gustavo\",\r\n            \"email\":\"gluis.holz@gmail.com\"\r\n          }\r\n        ]\r\n      }\r\n    }\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/batchGet",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"batchGet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gravar itens em LOTE pelo método BatchWrite",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n  \"RequestItems\":  {\r\n    \"customers\":[\r\n      {\r\n        \"PutRequest\":{\r\n          \"Item\":{\r\n            \"email\":\"teste@emailteste.com\",\r\n            \"name\":\"Teste Lote\",\r\n            \"data_nascimento\":\"30/05/2020\",\r\n            \"Idade\":20\r\n          }\r\n        }\r\n      }\r\n    ],\r\n     \"customers_store\":[\r\n      {\r\n        \"PutRequest\":{\r\n          \"Item\":{\r\n            \"email\":\"teste@emailteste.com\",\r\n            \"name\":\"Teste Lote\",\r\n            \"cidade\":\"São Leopoldo\",\r\n            \"data_nascimento\":\"30/05/2020\",\r\n            \"nome\":\"teste_nome\"\r\n          }\r\n        }\r\n      }\r\n    ]\r\n  }\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/batchWrite",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"batchWrite"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
